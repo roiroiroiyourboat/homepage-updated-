@@ -1,0 +1,841 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #b8c1ec;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.progress {
+    height: 3px;
+    width: 0%;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: progress 1s linear;
+}
+
+@keyframes progress {
+    to {
+        background-color: rgb(20, 255, 226);
+        width: 100%;
+    }
+}
+
+/* Navbar */
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .1);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    height: fit-content;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: .5rem;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(26, 43, 199, 0.192), transparent);
+    transition: .5s;
+ }   
+
+.logo {
+    color: #fff;
+    font-size: 1.5rem;
+    position: relative;
+    left: 45px;
+}
+
+.laundry_icon {
+    position: absolute;
+    height: 40px;
+    left: 10px;
+    width: 40px;
+}
+
+.nav-links {
+    padding-top: 15px;
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a, .nav-links .button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    border: none;
+    background: none;
+}
+
+.nav-links a:hover, .nav-links .button:hover {
+    color: #eebbc3;
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Navbar Responsiveness */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #b8c1ec;
+        transition: .5s;
+    }
+    
+    .nav-links li {
+        margin: 0;
+        text-align: center;
+        padding: 1.10rem;
+        height: auto;
+    }
+
+    .burger {
+        display: block;
+    }
+}
+
+.nav-active {
+    display: flex;
+    flex-direction: column;
+}
+
+.burger.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.burger.toggle .line2 {
+    opacity: 0;
+}
+
+.burger.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/*HOME*/
+.home {
+    position: relative;
+    background: url('/laundry_system/main/images/waves_bg.svg') no-repeat;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: all 0.5s ease-out;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    padding: 35px;
+    margin: 50px;
+}
+
+.home-content {
+    margin-top: 50px;
+    text-align: left;
+    color: #fffffe;
+    max-width: 500px;
+}
+
+.home-content h1 {
+    font-size: 4rem;
+    color: #fff;
+    text-align: center;
+}
+
+.home img {
+    max-width: 100%;
+    height: 400px;
+}
+
+/* Home Responsiveness */
+@media (max-width: 768px) {
+    .home-content h1 {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .home-content {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .home img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .home-content h1 {
+        font-size: 2rem;
+    }
+
+    .content {
+        padding: 15px;
+        margin: 15px;
+    }
+
+    .home img {
+        height: 250px;
+    }
+}
+
+/* About Us Section */
+.about-us {
+    background: url('/laundry_system/main/images/waves_about.svg') no-repeat center center/cover;
+}
+
+.aboutUs-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.aboutUs-content h1 {
+    font-size: 3rem;
+    color: #fff;
+    margin-top: 16px;
+}
+
+.aboutUs-content h3 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.about-us-pro {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.card {
+    width: 250px;
+    background: rgba(255, 255, 254, 0.5);
+    backdrop-filter: blur(1px);
+    border: 1px solid rgba(255, 255, 254, 0.25);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    transform-origin: center;
+    transform: scale(var(--scale));
+    transition: transform 0.5s linear;
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.card-content h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #232946;
+    text-align: center;
+}
+
+/* Our Services Section */
+.our-services {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-container2 {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.card2 {
+    width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.card2 img {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    transform-origin: center;
+    transform: scale(var(--scale));
+    transition: transform 0.5s linear;
+}
+
+.card-content h3, .card-content h4 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #232946;
+    text-align: center;
+}
+
+/*FOOTER*/
+footer {
+    position: relative;
+    width: 100%;
+    background: url('/laundry_system/main/images/laundry_bg1.webp') no-repeat center center/cover;
+    overflow: hidden;
+    color: #232946;
+    padding: 40px 0;
+    text-align: center;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 192, 203, 0.8);
+    z-index: 1;
+}
+
+footer > * {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.footer-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.footer-section h2 {
+    margin-bottom: 15px;
+    font-size: 1.75em;
+    color: #232946;
+}
+
+.footer-section p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #232946;
+}
+
+.footer-section i {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #232946;
+}
+
+.call {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.map-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.map-container iframe {
+    border: 0;
+    width: 100%;
+    height: 200px;
+}
+
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: flex-start;
+    }
+
+    .footer-section {
+        flex: 1;
+        margin: 0 20px;
+        text-align: left;
+    }
+
+    .call {
+        justify-content: flex-start;
+    }
+
+    .map-container {
+        width: 100%;
+    }
+}
+
+/*LOGIN FORM*/
+.form_container {
+    display: none;
+    position: absolute;
+    z-index: 1; /*below nav bar*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /*enable scrolling in form*/
+    background-color: rgba(0, 0, 0, 0.7); /*black background with opacity*/
+    padding-top: 60px;
+}
+
+.login_form {
+    background: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #4d4d4d;
+    width: 30%;
+    border-radius: 28px;
+}
+
+.logo_header header {
+    display: flex;
+    justify-content: center;
+}
+
+.logo_header img {
+    width: 50px;
+    height: 50px;
+}
+
+.logo_header h5 {
+    margin-bottom: 10px;
+}
+
+.form_container .input-box {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    position: relative;
+}
+
+.form_container .btn {
+    background: #b8c1ec;
+    border: none;
+    color: #181c30;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.form_container .btn:hover {
+    background: #232946;
+    color: #fffffe;
+}
+
+.links {
+    margin-top: 10px;
+}
+
+.links span a {
+    color: rgb(88, 88, 88);
+    text-decoration: none;
+}
+
+.links span a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.form_container > * {
+    position: relative;
+    z-index: 1002;
+}
+
+@media (max-width: 768px) {
+    .login_form {
+        width: 60%;
+        padding: 25px;
+    }
+
+    .logo_header img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .form_container .btn {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login_form {
+        width: 90%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+
+    .logo_header img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .form_container .btn {
+        padding: 8px;
+    }
+}
+
+/*POP UP LAUNDRY FORM*/
+.service_form {
+    display: none;
+    position: absolute;
+    z-index: 1; /*below nav bar*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /*enable scrolling in form*/
+    background-color: rgba(0, 0, 0, 0.7); /*black background with opacity*/
+    padding-top: 60px;
+}
+
+.form-container {
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 45%;
+    border-radius: 28px;
+}
+
+.service_form .form-container img {
+    width: 50px;
+    height: 50px;
+}
+
+.btnClose {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.service_form .form-container .row {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.service_form .form-container .col {
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 200px; 
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+.buttons {
+    text-align: center;
+    width: 100%;
+}
+
+.service_form button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 18px;
+}
+
+.service_form > * {
+    position: relative;
+    z-index: 1002;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        width: 80%;
+        flex-direction: column; /*switch to column layout*/
+    }
+
+    .service_form .form-container .row {
+        flex-direction: column; /* Switch rows to columns */
+    }
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        width: 95%;
+        flex-direction: column;
+    }
+
+    .service_form .form-container .row {
+        flex-direction: column; 
+    }
+
+    .service_form .form-container .col {
+        min-width: unset;
+    }
+}
+
+
+/*OVERVIEW PANEL*/
+.service_overview {
+    display: none;
+    position: absolute;
+    z-index: 1; /*below nav bar*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /*enable scrolling in form*/
+    background-color: rgba(0, 0, 0, 0.7); /*black background with opacity*/
+    padding-top: 60px;
+}
+
+.overview_container{
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%;
+    border-radius: 28px;
+}
+
+.overview_container img {
+    width: 50px;
+    height: 50px;
+}
+
+.overview_container > * {
+    position: relative;
+    z-index: 1002;
+}
+
+.overview_container button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 18px;
+}
+
+.service_overview table {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .overview_container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 576px) {
+    .overview_container {
+        width: 95%;
+    }
+}
+
+/*SERVICE DETAILS*/
+.service_details {
+    display: none;
+    position: absolute;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 60px;
+}
+
+.service_req_container{
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 45%;
+    border-radius: 28px;
+}
+
+.service_req_container .row {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.service_req_container .col {
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.service_details button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 18px;
+}
+
+.service_details > * {
+    position: relative;
+    z-index: 1002;
+}
+
+
+@media (max-width: 768px) {
+    .service_req_container {
+        width: 80%;
+        flex-direction: column; /*switch to column layout*/
+    }
+
+    .service_req_container .row {
+        flex-direction: column;
+    }
+
+}
+
+@media (max-width: 576px) {
+    .service_req_container {
+        width: 95%;
+        flex-direction: column;
+    }
+
+    .service_req_container .row {
+        flex-direction: column;
+    }
+
+    .service_req_container .col {
+       min-width: unset;
+    }
+}
+
+/*INVOICE*/
+.print_invoice {
+    display: none;
+    position: absolute;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 60px;
+}
+
+.invoice_container {
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; 
+    max-width: 600px;
+}
+
+#services-table {
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.print_invoice .logo_header header {
+    display: flex;
+    justify-content: center;
+}
+
+.print_invoice .logo_header img {
+    width: 50px;
+    height: 50px;
+}
+
+.print_invoice .logo_header h4 {
+    margin-bottom: 10px;
+}
