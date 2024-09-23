@@ -335,7 +335,7 @@ $('#amount_tendered').on('input', function() {
         if (amountTendered < finalTotalAmount) {
             Swal.fire("Insufficient Amount!", "The amount tendered is less than the total amount.", "warning");
         }
-    }, 500); //the sweetalert will only show if the user stops typing for a short period of time (500)
+    }, 700); //the sweetalert will only show if the user stops typing for a short period of time
 });
 
 $(document).ready(function() {
@@ -590,12 +590,6 @@ $(document).ready(function() {
                             $('#service_request_id_hidden').val(response.service_request_id);
                             $('#customer_name_hidden').val(response.customer_name);
                             $('#contact_number_hidden').val(response.contact_number);
-                            $('#laundry_service_id').val(response.service_id);
-                            $('#laundry_service_option').val(response.service_option);
-                            $('#laundry_category_id').val(response.category_id);
-                            $('#laundry_category_option').val(response.category_option);
-                            $('#weight').val(response.weight);
-                            $('#price').val(response.price);
                           
                             // Show service form after saving
                             $('#service_details').show();
@@ -627,12 +621,6 @@ $(document).ready(function() {
         var amountTendered = parseFloat($('#amount_tendered').val()) || 0;
         var customerName = $('#customer_name_hidden').val();
         var contactNumber = $('#contact_number_hidden').val();
-        var laundryServiceID = $('#laundry_service_id').val();
-        var laundryCategoryID = $('#laundry_category_id').val();
-        var laundryServiceOp = $('#laundry_service_option').val();
-        var laundryCategoryOp = $('#laundry_category_option').val();
-        var laundryWeight = $('#weight').val();
-        var laundryPrice = $('#price').val();
     
         var finalTotalAmount = totalPrice + deliveryFee + (isRush === 'Rush' ? rushFee : 0);
         var change = amountTendered - finalTotalAmount;
@@ -663,13 +651,7 @@ $(document).ready(function() {
             amount_tendered: amountTendered.toFixed(2),
             change: change.toFixed(2),
             customer_name: customerName,
-            contact_number: contactNumber,
-            laundry_service_id: laundryServiceID,
-            laundry_category_id: laundryCategoryID,
-            laundry_service_op: laundryServiceOp,
-            laundry_category_op: laundryCategoryOp,
-            laundry_weight: laundryWeight,
-            laundry_price: laundryPrice
+            contact_number: contactNumber
         };
     
         $.ajax({

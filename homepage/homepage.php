@@ -172,7 +172,7 @@ $conn->close();
                 <div class="row">
                     <div class="col">
                         <label for="form-label"><b>Weight(kg)</b></label>
-                        <input type="number" class="form-control" step="0.01" id="weight" name="weight" autocomplete="off">
+                        <input type="number" class="form-control" step="0.01" id="weight" name="weight" autocomplete="off" required>
                     </div>
                 </div>
 
@@ -260,14 +260,6 @@ $conn->close();
                     <input type="hidden" id="service_request_id_hidden" name="service_request_id">
                     <input type="hidden" id="customer_name_hidden" name="customer_name_hidden">
                     <input type="hidden" id="contact_number_hidden" name="contact_number_hidden">
-
-                    <input type="hidden" name="laundry_service_id" id="laundry_service_id">
-                    <input type="hidden" name="laundry_category_id" id="laundry_category_id">
-                    <input type="hidden" name="laundry_service_option" id="laundry_service_option">
-                    <input type="hidden" name="laundry_category_option" id="laundry_category_option">
-                    <input type="hidden" name="weight" id="weight">
-                    <input type="hidden" name="price" id="price">
-
 
                     <div class="row">       
                         <h5 class="text-center">Service Details</h5>

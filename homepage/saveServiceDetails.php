@@ -15,12 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rushFee = $_POST['rush_fee'] ?? null;
     $amountTendered = $_POST['amount_tendered'] ?? null;
     $change = $_POST['change'] ?? null;
-    $laundryServiceID = $_POST['laundry_service_id'] ?? null;
-    $laundryServiceOp = $_POST['laundry_service_op'] ?? null;
-    $laundryCategoryID = $_POST['laundry_category_id'] ?? null;
-    $laundryCategoryOp = $_POST['laundry_category_op'] ?? null;
-    $laundryPrice = $_POST['laundry_price'] ?? null;
-    $laundryWeight = $_POST['laundry_weight'] ?? null;
 
     $conn = new mysqli('localhost', 'root', '', 'laundry_db');
 
@@ -69,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Process each active request_id
     foreach ($requestIds as $requestId) {
         // Insert transaction details into tbl_transaction
-        $sqlTransaction = "INSERT INTO transaction (request_id, customer_id, customer_name, service_id, laundry_service_option, category_id, laundry_category_option, price, service_option_id, service_option_name, weight, laundry_cycle, customer_address, total_amount, delivery_fee, rush_fee, amount_tendered, money_change)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sqlTransaction = "INSERT INTO transaction (request_id, customer_id, customer_name, service_option_id, service_option_name, laundry_cycle, customer_address, total_amount, delivery_fee, rush_fee, amount_tendered, money_change)
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmtTransaction = $conn->prepare($sqlTransaction);
-        $stmtTransaction->bind_param('iisisisdisdssddddd', $requestId, $customerId, $customerName, $laundryServiceID, $laundryServiceOp, $laundryCategoryID, $laundryCategoryOp, $laundryPrice, $serviceId, $serviceOptionName, $laundryWeight, $isRush, $address, $totalAmount, $deliveryFee, $rushFee, $amountTendered, $change);
+        $stmtTransaction->bind_param('iisisssddddd', $requestId, $customerId, $customerName, $serviceId, $serviceOptionName, $isRush, $address, $totalAmount, $deliveryFee, $rushFee, $amountTendered, $change);
 
         if (!$stmtTransaction->execute()) {
             $conn->rollback();
@@ -96,20 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         $stmtPickUpDate->close();
-        
-        //update request_date in transaction
-        $sqlUpdateTransactionDate = "UPDATE transaction SET request_date = ? WHERE request_id = ?";
-        $stmtUpdateTransactionDate = $conn->prepare($sqlUpdateTransactionDate);
-        $stmtUpdateTransactionDate->bind_param('si', $pickupDate, $requestId);
-
-        if (!$stmtUpdateTransactionDate->execute()) {
-            $conn->rollback();
-            echo json_encode(['status' => 'error', 'message' => 'Failed to update request date in transaction for request id ' . $requestId . ': ' . $stmtUpdateTransactionDate->error]);
-            $stmtUpdateTransactionDate->close();
-            $conn->close();
-            exit;
-        }
-        $stmtUpdateTransactionDate->close();
 
         // Update order status to 'completed' in service_request table
         $sqlUpdate = "UPDATE service_request SET order_status = 'completed' WHERE request_id = ? AND customer_id = ?";
@@ -124,20 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         $stmtUpdate->close();
-
-        //update order status to 'completed' in transaction table
-        $sqlUpdateTransaction = "UPDATE transaction SET order_status = 'completed' WHERE request_id = ? AND customer_id = ?";
-        $stmtUpdateTransaction = $conn->prepare($sqlUpdateTransaction);
-        $stmtUpdateTransaction->bind_param('ii', $requestId, $customerId);
-
-        if (!$stmtUpdateTransaction->execute()) {
-            $conn->rollback();
-            echo json_encode(['status' => 'error', 'message' => 'Failed to update order status to completed for request id ' . $requestId . ' in transaction table: ' . $stmtUpdateTransaction->error]);
-            $stmtUpdateTransaction->close();
-            $conn->close();
-            exit;
-        }
-        $stmtUpdateTransaction->close();
     }
 
     // Commit transaction
