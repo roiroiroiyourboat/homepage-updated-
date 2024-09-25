@@ -568,7 +568,9 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: 'laundryService_config.php',
-            data: { orders: JSON.stringify(orders) },
+            data: { orders: JSON.stringify(orders),
+                    isNewTransaction: 'true'
+                },
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {

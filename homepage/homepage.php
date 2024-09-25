@@ -370,22 +370,24 @@ $conn->close();
 
                     <h6>Contact Number: <span id="invoice_contact_number"></span></h6>
                     <h6>Address: <span id="invoice_address"></span></h6>
-
-                    <h4>Service Details</h4>
-                    <table class="table table-bordered" id="services-table">
-                        <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                                <th>Weight</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Service details will be inserted here -->
-                        </tbody>
-                    </table>
+                    
+                    <div class="table-responsive">
+                        <h3>Service Details</h3>
+                        <table class="table table-bordered" id="services-table">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Weight</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Service details will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
                     
                     <h6>Service Type: <span id="invoice_service_type"></span></h6>
                     <h6>Pickup/Delivery Date: <span id="invoice_pickup_delivery_date"></span></h6>

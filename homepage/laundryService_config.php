@@ -4,13 +4,22 @@ header('Content-Type: application/json');
 
 try {
     $orders = json_decode($_POST['orders'], true);
+    $isNewTransaction = $_POST['isNewTransaction']; //check if it's new transaction
 
     $conn = new mysqli('localhost', 'root', '', 'laundry_db');
-
+    
     if ($conn->connect_error) {
         throw new Exception('Connection Failed: ' . $conn->connect_error);
     } else {
-        $service_request_id = null;
+       //checking if new transaction is starting
+       if ($isNewTransaction == 'true' || !isset($_SESSION['customer_order_id'])) {
+            //generate a new customer_order_id
+            $_SESSION['customer_order_id'] = uniqid('order_');
+        }
+
+        // Retrieve the current customer_order_id
+        $customer_order_id = $_SESSION['customer_order_id'];
+
         foreach ($orders as $order) {
             $customer_name = $order['customerName'];
             $contact_number = $order['contactNumber'];
@@ -40,11 +49,11 @@ try {
             }
             $stmt->close();
 
-            // Insert order
-            $stmt = $conn->prepare("INSERT INTO service_request (customer_id, customer_name, contact_number, service_id, laundry_service_option, category_id, laundry_category_option, quantity, weight, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("issisisidd", $customer_id, $customer_name, $contact_number, $service_id, $service_option, $category_id, $category_option, $quantity, $weight, $price);
+            // Insert order with customer_order_id
+            $stmt = $conn->prepare("INSERT INTO service_request (customer_id, customer_name, contact_number, service_id, laundry_service_option, category_id, laundry_category_option, quantity, weight, price, customer_order_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("issisisidds", $customer_id, $customer_name, $contact_number, $service_id, $service_option, $category_id, $category_option, $quantity, $weight, $price, $customer_order_id);
             $stmt->execute();
-            $service_request_id = $conn->insert_id;
+            $service_request_id = $conn->insert_id; // Get the latest service request ID
             $stmt->close();
         }
 
@@ -54,6 +63,7 @@ try {
             'status' => 'success',
             'message' => 'Your order has been saved successfully.',
             'customer_id' => $customer_id,
+            'customer_order_id' => $customer_order_id, // Include the customer order ID in the response
             'service_request_id' => $service_request_id,
             'customer_name' => $customer_name,
             'contact_number' => $contact_number
