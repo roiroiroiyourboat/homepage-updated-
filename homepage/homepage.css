@@ -826,16 +826,6 @@ footer > * {
     border-collapse: collapse;
 }
 
-.print_invoice .logo_header header {
-    display: flex;
-    justify-content: center;
-}
-
-.print_invoice .logo_header img {
-    width: 50px;
-    height: 50px;
-}
-
 .print_invoice .logo_header h4 {
     margin-bottom: 10px;
 }

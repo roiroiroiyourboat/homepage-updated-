@@ -345,14 +345,11 @@ $conn->close();
         <div class="print_invoice" id="print_invoice" style="display:none;">
             <div class="invoice_container" id="invoice_container">
                 <div class="logo_header">
-                    <header>
-                        <img src="/laundry_system/main/images/laundry-logo.png">     
-                    </header>
                     <h4 class="text-center">Azia Skye's Laundry</h4>
                     <h6 class="text-center">Verde Height, City of San Jose del Monte, Bulacan</h6>
                     <h6 class="text-center">0995-062-8516 / 0991-370-9729</h6>
                 </div>
-                <hr style="border: 1px solid #000000; margin: 16px 0;">
+                <hr>
                 
                 <div id="invoice-details" class="mb-4">
                     <h6>Customer No: <span id="invoice_customer_id_hidden"></span></h6>
