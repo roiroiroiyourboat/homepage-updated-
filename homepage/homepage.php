@@ -345,9 +345,10 @@ $conn->close();
         <div class="print_invoice" id="print_invoice" style="display:none;">
             <div class="invoice_container" id="invoice_container">
                 <div class="logo_header">
-                    <h4 class="text-center">Azia Skye's Laundry</h4>
-                    <h6 class="text-center">Verde Height, City of San Jose del Monte, Bulacan</h6>
-                    <h6 class="text-center">0995-062-8516 / 0991-370-9729</h6>
+                    <h5 class="text-center">Azia Skye's Laundry <br>
+                        <span>Verde Heights, City of San Jose del Monte, Bulacan</span> <br>
+                        <span>0995-062-8516 / 0991-370-9729</span>
+                    </h5>
                 </div>
                 <hr>
                 
@@ -369,7 +370,7 @@ $conn->close();
                     <h6>Address: <span id="invoice_address"></span></h6>
                     
                     <div class="table-responsive">
-                        <h3>Service Details</h3>
+                        <span>Service Details</span>
                         <table class="table table-bordered" id="services-table">
                             <thead>
                                 <tr>
