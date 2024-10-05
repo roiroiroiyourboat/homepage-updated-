@@ -498,16 +498,16 @@ $(document).ready(function() {
             if (weightValue < minWeight) {
                 swal.fire({
                     title: "Minimum Weight!",
-                    text: `The minimum weight for laundry is ${minWeight} kilos. Do you want to proceed with a 5 kilo order?`,
+                    text: `The minimum weight for laundry is ${minWeight} kilos. Do you want to proceed with a ${minWeight} kilo order?`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes',
                     cancelButtonText: 'No'
-                }).then((result) => {
+                }).then((result) => {   
                     if (result.isConfirmed) {
-                        validateAndSubmitOrder(5);
+                        validateAndSubmitOrder(minWeight);
                     } else {
                         $('#form_id').find('input[type="text"], input[type="number"], input[type="tel"], select').val('');
                     }

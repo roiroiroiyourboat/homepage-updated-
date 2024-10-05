@@ -14,7 +14,7 @@ try {
        //checking if new transaction is starting
        if ($isNewTransaction == 'true' || !isset($_SESSION['customer_order_id'])) {
             //generate a new customer_order_id
-            $_SESSION['customer_order_id'] = uniqid('order_');
+            $_SESSION['customer_order_id'] = uniqid('ord_');
         }
 
         // Retrieve the current customer_order_id
