@@ -158,7 +158,7 @@ html {
 /*HOME*/
 .home {
     position: relative;
-    background: url('/laundry_system/main/images/waves_bg.svg') no-repeat;
+    background: url('/laundry_system/images/waves_bg.svg') no-repeat;
     height: 100vh;
     background-size: cover;
     background-position: center;
@@ -241,7 +241,7 @@ html {
 
 /* About Us Section */
 .about-us {
-    background: url('/laundry_system/main/images/waves_about.svg') no-repeat center center/cover;
+    background: url('/laundry_system/images/waves_about.svg') no-repeat center center/cover;
 }
 
 .aboutUs-content {
@@ -353,7 +353,7 @@ html {
 footer {
     position: relative;
     width: 100%;
-    background: url('/laundry_system/main/images/laundry_bg1.webp') no-repeat center center/cover;
+    background: url('/laundry_system/images/laundry_bg1.webp') no-repeat center center/cover;
     overflow: hidden;
     color: #232946;
     padding: 40px 0;
@@ -824,6 +824,10 @@ footer > * {
     text-align: center;
     width: 100%;
     border-collapse: collapse;
+}
+
+.print_invoice h6 {
+    font-weight: 600;
 }
 
 .print_invoice .logo_header {

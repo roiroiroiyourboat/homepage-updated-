@@ -136,10 +136,40 @@ function validateContactNumber(input) {
     }
 }
 
+/*********************LOGIN FORM************************/
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault(); 
+
+    const formData = new FormData(this); 
+
+    fetch('login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        if (data.success) {
+            //redirect on successful login
+            window.location.href = '/laundry_system/dashboard/dashboard.php';
+        } else {
+            //error message
+            Swal.fire({
+                icon: 'error',
+                title: data.title,
+                text: data.message,
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+
 /***************************LAUNDRY SERVICE REQUEST****************************/
 //fetch laundry service
 function fetchServices() {
-    fetch('/laundry_system/main/homepage/home_configs/fetch_laundry_service.php')
+    fetch('/laundry_system/homepage/home_configs/fetch_laundry_service.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -163,7 +193,7 @@ document.addEventListener('DOMContentLoaded', fetchServices);
 
 //fetch laundry category
 function fetchCategories() {
-    fetch('/laundry_system/main/homepage/home_configs/fetchLaundryCateg.php')
+    fetch('/laundry_system/homepage/home_configs/fetchLaundryCateg.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -194,7 +224,7 @@ $('#service, #category').change(function() {
     if (serviceId && categoryId) {
       $.ajax({
         type: 'GET',
-        url: '/laundry_system/main/homepage/home_configs/getPrice.php',
+        url: '/laundry_system/homepage/home_configs/getPrice.php',
         data: { service_id: serviceId, category_id: categoryId },
         dataType: 'json'
       })
@@ -217,7 +247,7 @@ $('#service, #category').change(function() {
 
 //fetch service option (rush/delivery/pick-up)
 function fetchServiceOptions() {
-    fetch('/laundry_system/main/homepage/home_configs/fetch_service_option.php')
+    fetch('/laundry_system/homepage/home_configs/fetch_service_option.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -263,7 +293,7 @@ $('#service_option').change(function() {
     } else if (serviceOptionId) {
         $.ajax({
             type: 'GET',
-            url: '/laundry_system/main/homepage/home_configs/getServiceOptionRate.php',
+            url: '/laundry_system/homepage/home_configs/getServiceOptionRate.php',
             data: { option_id: serviceOptionId },
             dataType: 'json'
         })
@@ -294,7 +324,7 @@ $('#rush').change(function() {
     if ($(this).is(':checked')) {
         $.ajax({
             type: 'GET',
-            url: '/laundry_system/main/homepage/home_configs/getRushFee.php',
+            url: '/laundry_system/homepage/home_configs/getRushFee.php',
             data: {rush: 'Rush'},
             dataType: 'json'
         })
@@ -401,7 +431,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'GET',
-            url: '/laundry_system/main/homepage/home_configs/weight_limits.php',
+            url: '/laundry_system/homepage/home_configs/weight_limits.php',
             success: function(response) {
                 if (response.status === 'success') {
                     var minWeight = parseFloat(response.minWeight);
@@ -438,7 +468,7 @@ $(document).ready(function() {
                 // Validate if the customer name or contact number already exists
                 $.ajax({
                     type: 'POST',
-                    url: '/laundry_system/main/homepage/home_configs/validate_customer.php',
+                    url: '/laundry_system/homepage/home_configs/validate_customer.php',
                     data: {
                         customer_name: customerName,
                         contact_number: contactNumber
@@ -666,7 +696,9 @@ $(document).ready(function() {
                     Swal.fire({
                         title: "Great! Service details saved successfully.",
                         text: response.message,
-                        icon: "success"
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
                     }).then(() => {
                         resetOrder();
                         $('#form_id')[0].reset();
@@ -750,7 +782,7 @@ $(document).ready(function() {
         newWindow.document.write('<style>' +
             '@media print {' +
                 '@page {' +
-                    'size: 80mm;' + //size of thermal paper
+                    'size: 58mm;' + //size of thermal paper
                     'margin: 0;' +
                 '}' +
                 
@@ -760,7 +792,7 @@ $(document).ready(function() {
                     'background-color: transparent;' +
                     'padding: 10px;' + 
                     'width: 100%;' +
-                    'max-width: 80mm;' +  
+                    'max-width: 58mm;' +  
                 '}' + 
 
                 'hr{' + 
@@ -775,7 +807,7 @@ $(document).ready(function() {
                 '}' +
                 
                 '#services-table {' +
-                    'width: 70mm;' + 
+                    'width: 50mm;' + 
                     'border-collapse: collapse;' +
                     'margin: 0 auto;' + 
                 '}' +
@@ -784,7 +816,7 @@ $(document).ready(function() {
                     'border: 1px solid black;' +
                     'padding: 2px;' + 
                     'text-align: left;' +
-                    'font-size: 10px;' + 
+                    'font-size: 8px;' + 
                 '}' +
         
                 'body {' +
@@ -886,4 +918,137 @@ $(document).ready(function() {
             }
         });
     });
+
+    /**************FORGOT PASSWORD***************/
+    $('#forgotPasswordModal').on('shown.bs.modal', function () {
+        //remove any existing listeners to prevent duplicates
+        $('#reset_pass_username').off('input');
+        $('#submitForgotPassword').off('click');
+
+        //get the security question when they type their username
+        document.querySelector("#reset_pass_username").addEventListener("input", (e) => {
+            const username = e.target.value.trim();
+            clearTimeout(timeoutId)
+            timeoutId = setTimeout(function(){
+                if (username) {
+                fetchSecurityQuestion(username).then(fetchedQuestion => {
+                    document.querySelector("#question").value = fetchedQuestion || 'No question found';
+                });
+                } else {
+                    document.querySelector("#question").value = '';
+                }
+            }, 1000)
+
+        });
+
+        // Handle the form submission when the submit button is clicked
+        document.querySelector("#submitForgotPassword").addEventListener("click", () => {
+            const username = document.querySelector("#reset_pass_username").value.trim();
+            const answer = document.querySelector("#answer").value.trim();
+
+            console.log("Username: ", username);
+            console.log("Answer: ", answer);
+
+            if (!username) {
+                console.log("No username provided.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Input Required',
+                    text: 'Username is required.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+                return;
+            }
+
+            if (!answer) {
+                console.log("No answer provided.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Input Required',
+                    showConfirmButton: false,
+                    text: 'Answer is required.',
+                    timer: 2000,
+                });
+                return;
+            }
+
+            //send `username` and `answer` to the server
+            fetch('/laundry_system/homepage/forgot_password.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reset_pass_username: username, answer })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                    modal.hide();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Answer Verified! ' + data.message,
+                        showConfirmButton: false,
+                        timer: 2000,
+                    }).then(() => {
+                        window.location.href = '/laundry_system/homepage/reset_password.php';
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        text: data.message,
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    text: 'An error occurred. Please try again later.',
+                });
+            });
+        });
+    });
+
+    //to retrieve security question
+    function fetchSecurityQuestion(username) {
+        return fetch('/laundry_system/homepage/get_security_question.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                return data.question;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    text: data.message || 'Failed to retrieve security question.',
+                });
+                return '';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching security question:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                timer: 2000,
+                showConfirmButton: false,
+                text: 'An error occurred. Please try again.',
+            });
+            return '';
+        });
+    }
+
 });
