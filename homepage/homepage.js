@@ -501,14 +501,14 @@ $(document).ready(function() {
                             swal.fire({
                                 title: "Order added to list!",
                                 text: "You can proceed or add more orders.",
-                                icon: "success"
-                            }).then((result) => {
-                                if (result.isConfirmed) {
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => {
                                     // Clear form inputs except customer name and contact number
                                     $('#form_id').find('input[type="text"], input[type="number"], select').not('#customer_name, #contact_number').val('');
                                     $('#service_form').hide();
                                     $('#service_overview').show();
-                                }
                             });
                         }
                     },
